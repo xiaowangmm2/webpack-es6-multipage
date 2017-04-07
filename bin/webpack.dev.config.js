@@ -76,7 +76,7 @@ var devConfig = {
 var pages = Object.keys(Entry.getViewEntry('views/*.html'));
 pages.forEach(function(pathname) {
     var conf = {
-        template: 'ejs-render-loader!views/' + pathname + '.html', //html模板路径
+        template: 'ejs-render-loader!views/' + pathname + '.html', //html模板路径，相对于path
         inject: false, //js插入的位置，true/'head'/'body'/false
         filename: pathname + '.html'
     };
