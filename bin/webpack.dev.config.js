@@ -16,7 +16,7 @@ var devConfig = {
     entry: entries,
     output: {
         path: path.join(__dirname, '../dist/'),
-        filename: '[name]/index.js',
+        filename: 'build/[name]/index.js',
         publicPath: '/'
     },
     module: {
@@ -58,15 +58,23 @@ var devConfig = {
         }, {
             test: /\.(png|jpg)$/,
             use: 'url-loader?limit=8&name=[path][name].[ext]'
+        },{
+            test: /\.xtpl$/,
+            loader: 'xtpl-loader'
         }]
     },
     resolve: {
         extensions: ['.js']
     },
     plugins: [
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery",
+            "window.jQuery": "jquery"
+        }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new ExtractTextPlugin('[name]/index.css'),
+        new ExtractTextPlugin('build/[name]/index.css'),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'commons'
         })
@@ -76,7 +84,7 @@ var devConfig = {
 var pages = Object.keys(Entry.getViewEntry('views/*.html'));
 pages.forEach(function(pathname) {
     var conf = {
-        template: 'ejs-render-loader!views/' + pathname + '.html', //html模板路径，相对于path
+        template: 'ejs-render-loader!views/' + pathname + '.html', //html模板路径
         inject: false, //js插入的位置，true/'head'/'body'/false
         filename: pathname + '.html'
     };

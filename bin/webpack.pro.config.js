@@ -12,8 +12,8 @@ var proConfig = {
     entry: entries,
     output: {
         path: path.join(__dirname, '../dist/'),
-        filename: '[name]/index-[hash].js',
-        publicPath: '/ceshi/'
+        filename: 'build/[name]/index-[hash].js',
+        publicPath: '/'
     },
     module: {
         rules: [{
@@ -47,16 +47,24 @@ var proConfig = {
         }, {
             test: /\.(png|jpg)$/,
             use: 'url-loader?limit=8182&name=[path][name].[ext]'
+        },{
+            test: /\.xtpl$/,
+            loader: 'xtpl-loader'
         }]
     },
     resolve: {
         extensions: ['.js']
     },
     plugins: [
-        new CleanWebpackPlugin(['dist']),
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery",
+            "window.jQuery": "jquery"
+        }),
+        new CleanWebpackPlugin(['dist'],{root: path.join(__dirname, '../')}),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new ExtractTextPlugin('[name]/index-[hash].css'),
+        new ExtractTextPlugin('build/[name]/index-[hash].css'),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'commons'
         }),

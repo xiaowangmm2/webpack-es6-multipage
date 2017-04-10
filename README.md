@@ -1,12 +1,23 @@
-# webpack-es6-multipage
-webpack多页工程
+# 园区门户多页框架说明
 
-# USAGE
+## 目录结构
+- bin 配置目录
+- dist 最终打包目录
+- images 图片目录
+- src 开发目录
+- static 静态资源目录
+- util 公共文件工具目录
+- views html布局文件目录
+- server.js node服务文件
 
-## develop
-1. npm install
-2. npm run start
 
-## compline
-1. npm install
-2. npm run pro
+## 使用
+
+- 起服务本地开发
+`npm run start`
+
+- 开发文件编译
+`npm run webpack`
+
+- 线上文件打包发布
+`npm run pro` 
